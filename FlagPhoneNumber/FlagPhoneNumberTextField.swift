@@ -11,6 +11,18 @@ import libPhoneNumber_iOS
 
 open class CustomNavigationController: UINavigationController {
     
+    class func whiteNavigationBarStyle(navigationBar: UINavigationBar) {
+        
+        navigationBar.isTranslucent = false
+        navigationBar.tintColor = .black
+        navigationBar.barTintColor = .white
+        
+//        let titleTextAttributesForWhite = [NSAttributedStringKey.foregroundColor: UIColor.black,
+//                                           NSAttributedStringKey.font: AppFont.font(for: FontName.SFProText, weight: .bold, size: 16)]
+//
+//        navigationBar.titleTextAttributes = titleTextAttributesForWhite
+//        navigationBar.largeTitleTextAttributes = titleTextAttributesForWhite
+    }
 }
 
 open class FPNTextField: UITextField, FPNCountryPickerDelegate, FPNDelegate {
@@ -128,6 +140,8 @@ open class FPNTextField: UITextField, FPNCountryPickerDelegate, FPNDelegate {
 		autocorrectionType = .no
 		addTarget(self, action: #selector(didEditText), for: .editingChanged)
 		addTarget(self, action: #selector(displayNumberKeyBoard), for: .touchDown)
+        let whiteNavBar = UINavigationBar.appearance(whenContainedInInstancesOf: [CustomNavigationController.self])
+        CustomNavigationController.whiteNavigationBarStyle(whiteNavBar)
 	}
 
 	private func setupFlagButton() {
@@ -335,6 +349,8 @@ open class FPNTextField: UITextField, FPNCountryPickerDelegate, FPNDelegate {
 			let searchCountryViewController = FPNSearchCountryViewController(countries: countries)
 			let navigationViewController = CustomNavigationController(rootViewController: searchCountryViewController)
 
+            
+            
 			searchCountryViewController.delegate = self
 
 			parentViewController?.present(navigationViewController, animated: true, completion: nil)
