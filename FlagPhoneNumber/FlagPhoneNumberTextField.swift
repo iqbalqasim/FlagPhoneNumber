@@ -9,8 +9,13 @@
 import Foundation
 import libPhoneNumber_iOS
 
+open class CustomNavigationController: UINavigationController {
+    
+}
+
 open class FPNTextField: UITextField, FPNCountryPickerDelegate, FPNDelegate {
 
+    
 	/// The size of the flag
 	public var flagSize: CGSize = CGSize(width: 32, height: 32) {
 		didSet {
@@ -176,7 +181,7 @@ open class FPNTextField: UITextField, FPNCountryPickerDelegate, FPNDelegate {
 		reloadInputViews()
 	}
 
-	@objc private func displayCountryKeyboard() {
+	@objc public func displayCountryKeyboard() {
 		inputView = countryPicker
 		inputAccessoryView = getToolBar(with: getCountryListBarButtonItems())
 		tintColor = .clear
@@ -328,7 +333,7 @@ open class FPNTextField: UITextField, FPNCountryPickerDelegate, FPNDelegate {
 	private func showSearchController() {
 		if let countries = countryPicker.countries {
 			let searchCountryViewController = FPNSearchCountryViewController(countries: countries)
-			let navigationViewController = UINavigationController(rootViewController: searchCountryViewController)
+			let navigationViewController = CustomNavigationController(rootViewController: searchCountryViewController)
 
 			searchCountryViewController.delegate = self
 
