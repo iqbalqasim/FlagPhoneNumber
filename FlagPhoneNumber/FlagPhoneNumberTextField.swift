@@ -16,12 +16,6 @@ open class CustomNavigationController: UINavigationController {
         navigationBar.isTranslucent = false
         navigationBar.tintColor = .black
         navigationBar.barTintColor = .white
-        
-//        let titleTextAttributesForWhite = [NSAttributedStringKey.foregroundColor: UIColor.black,
-//                                           NSAttributedStringKey.font: AppFont.font(for: FontName.SFProText, weight: .bold, size: 16)]
-//
-//        navigationBar.titleTextAttributes = titleTextAttributesForWhite
-//        navigationBar.largeTitleTextAttributes = titleTextAttributesForWhite
     }
 }
 
@@ -140,8 +134,12 @@ open class FPNTextField: UITextField, FPNCountryPickerDelegate, FPNDelegate {
 		autocorrectionType = .no
 		addTarget(self, action: #selector(didEditText), for: .editingChanged)
 		addTarget(self, action: #selector(displayNumberKeyBoard), for: .touchDown)
-        let whiteNavBar = UINavigationBar.appearance(whenContainedInInstancesOf: [CustomNavigationController.self])
-        CustomNavigationController.whiteNavigationBarStyle(whiteNavBar)
+        if #available(iOS 9.0, *) {
+            let whiteNavBar = UINavigationBar.appearance(whenContainedInInstancesOf: [CustomNavigationController.self])
+            CustomNavigationController.whiteNavigationBarStyle(navigationBar: whiteNavBar)
+        } else {
+            // Fallback on earlier versions
+        }
 	}
 
 	private func setupFlagButton() {
@@ -346,14 +344,12 @@ open class FPNTextField: UITextField, FPNCountryPickerDelegate, FPNDelegate {
 
 	private func showSearchController() {
 		if let countries = countryPicker.countries {
-			let searchCountryViewController = FPNSearchCountryViewController(countries: countries)
-			let navigationViewController = CustomNavigationController(rootViewController: searchCountryViewController)
-
+            let searchCountryViewController = FPNSearchCountryViewController(countries: countries)
+            let navigationViewController = CustomNavigationController(rootViewController: searchCountryViewController)
             
+            searchCountryViewController.delegate = self
             
-			searchCountryViewController.delegate = self
-
-			parentViewController?.present(navigationViewController, animated: true, completion: nil)
+            parentViewController?.present(navigationViewController, animated: true, completion: nil)
 		}
 	}
 
