@@ -20,8 +20,6 @@ open class CustomNavigationController: UINavigationController {
 }
 
 open class FPNTextField: UITextField, FPNCountryPickerDelegate, FPNDelegate {
-
-    public var showPickerFirst: Bool = true
     
 	/// The size of the flag
 	public var flagSize: CGSize = CGSize(width: 32, height: 32) {
@@ -196,17 +194,7 @@ open class FPNTextField: UITextField, FPNCountryPickerDelegate, FPNDelegate {
 
 	@objc public func displayCountryKeyboard() {
         
-        if showPickerFirst == false  && parentViewController != nil {
-            
-            showSearchController
-        }
-        else {
-            inputView = countryPicker
-            inputAccessoryView = getToolBar(with: getCountryListBarButtonItems())
-            tintColor = .clear
-            reloadInputViews()
-            becomeFirstResponder()
-        }
+        showSearchController()
 	}
 
 	@objc private func displayAlphabeticKeyBoard() {
