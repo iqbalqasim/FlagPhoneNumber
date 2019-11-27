@@ -344,7 +344,7 @@ open class FPNTextField: UITextField, FPNCountryPickerDelegate, FPNDelegate {
             let navigationViewController = CustomNavigationController(rootViewController: searchCountryViewController)
             
             searchCountryViewController.delegate = self
-            
+            navigationViewController.modalPresentationStyle = .fullScreen
             parentViewController?.present(navigationViewController, animated: true, completion: nil)
 		}
 	}
